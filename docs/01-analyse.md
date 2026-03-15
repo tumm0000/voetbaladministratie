@@ -133,7 +133,7 @@ Enkele use cases zijn hieronder kort uitgewerkt. Deze beschrijvingen maken de ge
 Het onderstaande diagram geeft de actoren (bestuur, trainers) en de subsystemen van de applicatie weer, inclusief welke actor welk subsysteem gebruikt.
 
 ```mermaid
-flowchart TB
+flowchart LR
     subgraph actoren["Actoren"]
         Bestuur[Bestuur]
         Trainers[Trainers]
