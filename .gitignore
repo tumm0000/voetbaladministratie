@@ -1,0 +1,31 @@
+# C# / .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.csproj.user
+packages/
+*.dll
+*.exe
+*.pdb
+*.cache
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Build resultaten en logs
+[Dd]ebug/
+[Rr]elease/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
+*.log
+plan/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Lokale configuratie (optioneel: connection strings e.d.)
+# appsettings.Development.json
