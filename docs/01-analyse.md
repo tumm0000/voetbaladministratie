@@ -56,9 +56,9 @@ Op basis van de basisfunctionaliteiten zijn met een **verb–noun-analyse** de v
 
 Het onderstaande diagram geeft de actoren en de use cases weer binnen de grenzen van het systeem. De use cases sluiten aan op de verb–noun-analyse en de basisfunctionaliteiten.
 
-```mermaid
+```UML
 flowchart LR
-    subgraph systeem["Systeem: Voetbalclub Administratie"]
+    subgraph systeem["Voetbalclub Administratie"]
         UC1[Leden beheren]
         UC2[Betaling registreren]
         UC3[Achterstalligen inzien]
