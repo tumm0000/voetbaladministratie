@@ -34,7 +34,7 @@ De applicatie ondersteunt het dagelijks beheer van een voetbalclub met de volgen
 Het onderstaande diagram geeft de actoren (bestuur, trainers) en de subsystemen van de applicatie weer, inclusief welke actor welk subsysteem gebruikt.
 
 ```mermaid
-flowchart TB
+flowchart LR
     subgraph actoren["Actoren"]
         Bestuur[Bestuur]
         Trainers[Trainers]
@@ -52,10 +52,6 @@ flowchart TB
     Trainers --> Ledenbeheer
     Trainers --> Wedstrijdplanning
 ```
-
-![Contextdiagram: actoren en subsystemen](.\diagrams\mermaid-diagram.png)
-
-*De afbeelding hierboven is een weergave van het contextdiagram. Deze is gegenereerd door de Mermaid-code in te voeren op [mermaid.live](https://mermaid.live).
 
 **Toelichting:**
 
