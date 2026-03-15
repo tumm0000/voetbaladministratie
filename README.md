@@ -20,4 +20,4 @@ De applicatie biedt een eenvoudige interface voor bestuur en trainers.
 
 ## Lokaal draaien
 
-*(Instructies volgen na implementatie; zie ook `docs/05-applicatie-toelichting.md`.)*
+*(Instructies volgen na implementatie)*

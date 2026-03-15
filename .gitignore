@@ -26,6 +26,3 @@ plan/
 # OS
 Thumbs.db
 .DS_Store
-
-# Lokale configuratie (optioneel: connection strings e.d.)
-# appsettings.Development.json
