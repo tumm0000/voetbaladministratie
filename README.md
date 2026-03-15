@@ -2,6 +2,8 @@
 
 Software voor ledenbeheer en wedstrijdplanning van een lokale voetbalclub. Dit project is een individuele opdracht: ontwerp en werkend prototype voor een administratiesysteem dat leden, contributies en wedstrijden beheert.
 
+**Repository:** [https://github.com/tumm0000/voetbaladministratie](https://github.com/tumm0000/voetbaladministratie)
+
 ## Wat doet dit project?
 
 - **Ledenbeheer** — Registratie en beheer van leden en hun gegevens (naam, contact, lidmaatschap)
