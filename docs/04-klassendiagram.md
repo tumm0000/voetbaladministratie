@@ -1,117 +1,11 @@
-# mermaid-diagram.png
-Deze afbeelding is een weergave van het contextdiagram. Deze is gegenereerd door de volgende Mermaid-code in te voeren op [mermaid.live](https://mermaid.live).
-```
-flowchart LR
-    subgraph actoren["Actoren"]
-        Bestuur[Bestuur]
-        Trainers[Trainers]
-    end
+# Stap 4: Klassendiagram (Hoe is de code gestructureerd?)
 
-    subgraph subsystemen["Subsystemen"]
-        Ledenbeheer[Ledenbeheer]
-        Wedstrijdplanning[Wedstrijdplanning]
-        Betalingssysteem["Betalingssysteem en herinneringen"]
-    end
+In deze stap wordt het domeinmodel vertaald naar een UML-klassendiagram voor de C#-applicatie. Het doel is om duidelijk te maken welke objecten nodig zijn, welke attributen ze bevatten en welke methoden de kernfunctionaliteit ondersteunen.
 
-    Bestuur --> Ledenbeheer
-    Bestuur --> Wedstrijdplanning
-    Bestuur --> Betalingssysteem
-    Trainers --> Ledenbeheer
-    Trainers --> Wedstrijdplanning
-```
+---
 
-# ERD-sem-2.png
-Deze afbeelding is een weergave van het ER Diagram. Deze is gegenereerd door de volgende Mermaid-code in te voeren op [mermaid.live](https://mermaid.live).
-```mermaid
-erDiagram
-    LID ||--o{ LID_TEAM : is_ingedeeld_in
-    TEAM ||--o{ LID_TEAM : bevat
+## 1. UML klassendiagram
 
-    LID ||--o{ CONTRIBUTIE : heeft
-    CONTRIBUTIE ||--o{ BETALING : wordt_betaald_met
-
-    LID ||--o{ BESCHIKBAARHEID : geeft_op
-    VELD ||--o{ WEDSTRIJD : host
-    VELD ||--o{ TRAINING : host
-
-    TEAM ||--o{ WEDSTRIJD : speelt
-    TEAM ||--o{ TRAINING : traint
-
-    LID {
-        int lid_id PK
-        string voornaam
-        string achternaam
-        string email
-        string telefoon
-        string lidmaatschap_type
-        string status
-    }
-
-    TEAM {
-        int team_id PK
-        string naam
-        string categorie
-    }
-
-    LID_TEAM {
-        int lid_team_id PK
-        int lid_id FK
-        int team_id FK
-        date vanaf_datum
-    }
-
-    CONTRIBUTIE {
-        int contributie_id PK
-        int lid_id FK
-        decimal bedrag
-        date vervaldatum
-        string status
-    }
-
-    BETALING {
-        int betaling_id PK
-        int contributie_id FK
-        decimal bedrag
-        date betaaldatum
-        string betaalmethode
-    }
-
-    VELD {
-        int veld_id PK
-        string naam
-        string locatie
-    }
-
-    BESCHIKBAARHEID {
-        int beschikbaarheid_id PK
-        int lid_id FK
-        date datum
-        string tijdslot
-        string status
-    }
-
-    WEDSTRIJD {
-        int wedstrijd_id PK
-        int team_id FK
-        int veld_id FK
-        date datum
-        string tijdslot
-        string tegenstander
-        string status
-    }
-
-    TRAINING {
-        int training_id PK
-        int team_id FK
-        int veld_id FK
-        date datum
-        string tijdslot
-        string status
-    }
-```
-
-# UML-klassen-diagram.png
-Deze afbeelding is een weergave van het UML klassen diagram. Deze is gegenereerd door de volgende Mermaid-code in te voeren op [mermaid.live](https://mermaid.live).
 ```mermaid
 classDiagram
     class Lid {
@@ -240,3 +134,12 @@ classDiagram
     BetalingService --> BetalingRepository : gebruikt
     PlanningService --> PlanningRepository : gebruikt
 ```
+
+---
+
+## 2. Korte toelichting
+
+- De domeinklassen (`Lid`, `Team`, `Contributie`, `Wedstrijd`, enz.) sluiten direct aan op het ERD en SQL-datamodel uit stap 2 en 3.
+- De serviceklassen bundelen de use cases uit de analyse: leden beheren, betalingen registreren/achterstalligen bepalen, en wedstrijden/trainingen plannen.
+- De repositoryklassen verzorgen database-toegang via ADO.NET en houden SQL-logica gescheiden van de domein- en servicelogica.
+- Deze structuur maakt de code overzichtelijk, testbaar en passend binnen de prototype-scope zonder ORM.
