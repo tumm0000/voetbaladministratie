@@ -1,0 +1,93 @@
+@model List<VoetbalAdministratie.Web.Repositories.BetalingItem>
+@{
+    ViewData["Title"] = "Betalingen";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">Betalingen</h1>
+    <a class="btn btn-primary" asp-action="Nieuw">Nieuwe contributie</a>
+</div>
+
+@if (TempData["Message"] is string msg)
+{
+    <div class="alert alert-success">@msg</div>
+}
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-info">Geen contributieregels gevonden.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+            <tr>
+                <th>Lid</th>
+                <th>E-mail</th>
+                <th>Vervaldatum</th>
+                <th>Bedrag</th>
+                <th>Status</th>
+                <th class="text-end">Actie</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Naam</td>
+                    <td>@item.Email</td>
+                    <td>@item.Vervaldatum.ToString("yyyy-MM-dd")</td>
+                    <td>€ @item.Bedrag.ToString("0.00")</td>
+                    <td>
+                        @if (item.Status == "Open")
+                        {
+                            <span class="badge bg-danger text-white">Open</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success text-white">Betaald</span>
+                        }
+                    </td>
+                    <td class="text-end">
+                        @if (item.Status == "Open")
+                        {
+                            <div class="d-inline-flex justify-content-end align-items-center gap-2 flex-wrap">
+                                <a class="btn btn-sm btn-outline-secondary" asp-action="Wijzig" asp-route-id="@item.ContributieId">Wijzig</a>
+                                <form method="post" asp-action="Verwijder" class="m-0 d-inline-flex align-items-center">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="contributieId" value="@item.ContributieId" />
+                                    <button class="btn btn-sm btn-outline-danger" type="submit">Verwijder</button>
+                                </form>
+                                <form method="post" asp-action="Registreer" class="m-0 d-inline-flex align-items-center gap-2">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="contributieId" value="@item.ContributieId" />
+                                    <input type="hidden" name="bedrag" value="@item.Bedrag" />
+                                    <select class="form-select form-select-sm" name="betaalmethode" style="width: 160px;">
+                                        <option>Contant</option>
+                                        <option>Pin</option>
+                                        <option>Overboeking</option>
+                                    </select>
+                                    <button class="btn btn-sm btn-primary" type="submit">Markeer betaald</button>
+                                </form>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="d-inline-flex justify-content-end align-items-center gap-2 flex-wrap">
+                                <a class="btn btn-sm btn-outline-secondary" asp-action="Wijzig" asp-route-id="@item.ContributieId">Wijzig</a>
+                                <form method="post" asp-action="Verwijder" class="m-0 d-inline-flex align-items-center">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="contributieId" value="@item.ContributieId" />
+                                    <button class="btn btn-sm btn-outline-danger" type="submit">Verwijder</button>
+                                </form>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+
