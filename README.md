@@ -37,7 +37,16 @@ Het SQL-schema staat in `database/schema.sql`.
 
 ## Lokaal draaien
 
-*(Na afronding van Stap 5 wordt deze stap aangevuld met de concrete commando’s en vereisten.)*
+De applicatie is een ASP.NET Core MVC webapp (C#, .NET 7) met SQLite.
+
+1. Zorg dat je de .NET SDK geïnstalleerd hebt (minimaal .NET 7).
+2. Start de webapp vanuit de repo-root:
+
+```bash
+dotnet run --project src/VoetbalAdministratie.Web
+```
+
+Bij de eerste start wordt automatisch een SQLite database aangemaakt en gevuld met dummy-data.
 
 ## Techniek
 

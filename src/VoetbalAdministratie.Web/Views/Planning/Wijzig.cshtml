@@ -1,0 +1,80 @@
+@model VoetbalAdministratie.Web.Models.Wedstrijd
+@using VoetbalAdministratie.Web.Models
+@{
+    ViewData["Title"] = "Wijzig wedstrijd";
+    var teams = ViewBag.Teams as List<Team> ?? new List<Team>();
+    var velden = ViewBag.Velden as List<Veld> ?? new List<Veld>();
+}
+
+<h1 class="h3">Wijzig wedstrijd</h1>
+
+@if (TempData["Error"] is string err)
+{
+    <div class="alert alert-danger">@err</div>
+}
+
+<form method="post" class="mt-3">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="WedstrijdId" />
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Team</label>
+            <select class="form-select" asp-for="TeamId">
+                <option value="0">Kies team...</option>
+                @foreach (var t in teams)
+                {
+                    <option value="@t.TeamId">@t.Naam (@t.Categorie)</option>
+                }
+            </select>
+            <span class="text-danger" asp-validation-for="TeamId"></span>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Veld</label>
+            <select class="form-select" asp-for="VeldId">
+                <option value="0">Kies veld...</option>
+                @foreach (var v in velden)
+                {
+                    <option value="@v.VeldId">@v.Naam</option>
+                }
+            </select>
+            <span class="text-danger" asp-validation-for="VeldId"></span>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Datum</label>
+            <input class="form-control" asp-for="Datum" type="date" />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Tijdslot</label>
+            <input class="form-control" asp-for="Tijdslot" />
+            <span class="text-danger" asp-validation-for="Tijdslot"></span>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Status</label>
+            <select class="form-select" asp-for="Status">
+                <option value="Gepland">Gepland</option>
+                <option value="Gespeeld">Gespeeld</option>
+                <option value="Geannuleerd">Geannuleerd</option>
+                <option value="Uitgesteld">Uitgesteld</option>
+            </select>
+        </div>
+        <div class="col-md-12">
+            <label class="form-label">Tegenstander (optioneel)</label>
+            <input class="form-control" asp-for="Tegenstander" />
+        </div>
+        <div class="col-md-12">
+            <div class="form-text">
+                Beschikbaarheid: <strong>strenge check</strong> (alle spelers van het team moeten “Beschikbaar” zijn op datum+tijdslot).
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex gap-2">
+        <button class="btn btn-primary" type="submit">Opslaan</button>
+        <a class="btn btn-outline-secondary" asp-action="Index">Annuleren</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

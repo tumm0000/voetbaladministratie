@@ -1,0 +1,52 @@
+@model List<VoetbalAdministratie.Web.Models.Lid>
+@{
+    ViewData["Title"] = "Leden";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">Leden</h1>
+    <a class="btn btn-primary" asp-action="Nieuw">Nieuw lid</a>
+</div>
+
+@if (TempData["Message"] is string msg)
+{
+    <div class="alert alert-success">@msg</div>
+}
+@if (TempData["Error"] is string err)
+{
+    <div class="alert alert-danger">@err</div>
+}
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+        <tr>
+            <th>Naam</th>
+            <th>E-mail</th>
+            <th>Telefoon</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th class="text-end">Acties</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var lid in Model)
+        {
+            <tr>
+                <td>@lid.VolledigeNaam</td>
+                <td>@lid.Email</td>
+                <td>@(lid.Telefoon ?? "-")</td>
+                <td>@lid.LidmaatschapType</td>
+                <td>@lid.Status</td>
+                <td class="text-end">
+                    <div class="d-inline-flex justify-content-end align-items-center gap-2 flex-wrap">
+                        <a class="btn btn-sm btn-outline-primary" asp-action="Team" asp-route-id="@lid.LidId">Team</a>
+                        <a class="btn btn-sm btn-outline-secondary" asp-action="Wijzig" asp-route-id="@lid.LidId">Wijzig</a>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+

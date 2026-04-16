@@ -1,0 +1,64 @@
+@model VoetbalAdministratie.Web.Models.Lid
+@{
+    ViewData["Title"] = "Wijzig lid";
+}
+
+<h1 class="h3">Wijzig lid</h1>
+
+<form method="post" class="mt-3">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="LidId" />
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Voornaam</label>
+            <input class="form-control" asp-for="Voornaam" />
+            <span class="text-danger" asp-validation-for="Voornaam"></span>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Achternaam</label>
+            <input class="form-control" asp-for="Achternaam" />
+            <span class="text-danger" asp-validation-for="Achternaam"></span>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">E-mail</label>
+            <input class="form-control" asp-for="Email" />
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Telefoon</label>
+            <input class="form-control" asp-for="Telefoon" />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Geboortedatum</label>
+            <input class="form-control" asp-for="Geboortedatum" type="date" />
+            <span class="text-danger" asp-validation-for="Geboortedatum"></span>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Lidmaatschap type</label>
+            <select class="form-select" asp-for="LidmaatschapType">
+                <option value="Spelend">Spelend</option>
+                <option value="Niet-spelend">Niet-spelend</option>
+            </select>
+            <span class="text-danger" asp-validation-for="LidmaatschapType"></span>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Status</label>
+            <select class="form-select" asp-for="Status">
+                <option value="Actief">Actief</option>
+                <option value="Inactief">Inactief</option>
+            </select>
+            <span class="text-danger" asp-validation-for="Status"></span>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex gap-2">
+        <button class="btn btn-primary" type="submit">Opslaan</button>
+        <a class="btn btn-outline-secondary" asp-action="Index">Terug</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

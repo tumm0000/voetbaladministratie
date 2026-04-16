@@ -1,0 +1,84 @@
+@model List<VoetbalAdministratie.Web.Repositories.PlanningItem>
+@{
+    ViewData["Title"] = "Planning";
+    var warnings = TempData["Warnings"] as List<string>;
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">Planning</h1>
+    <div class="d-inline-flex align-items-center gap-2 flex-wrap">
+        <a class="btn btn-sm btn-outline-primary" asp-action="Nieuw">Nieuwe wedstrijd</a>
+        <form method="post" asp-action="AutoPlan" class="m-0 d-inline-flex align-items-center">
+            @Html.AntiForgeryToken()
+            <button class="btn btn-sm btn-primary" type="submit">Auto-plan (7 dagen)</button>
+        </form>
+    </div>
+</div>
+
+@if (TempData["Message"] is string msg)
+{
+    <div class="alert alert-success">@msg</div>
+}
+@if (TempData["Error"] is string err)
+{
+    <div class="alert alert-danger">@err</div>
+}
+@if (warnings is { Count: > 0 })
+{
+    <div class="alert alert-warning">
+        <strong>Let op:</strong>
+        <ul class="mb-0">
+            @foreach (var w in warnings)
+            {
+                <li>@w</li>
+            }
+        </ul>
+    </div>
+}
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-info">Nog geen wedstrijden gepland.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Tijdslot</th>
+                <th>Team</th>
+                <th>Veld</th>
+                <th>Tegenstander</th>
+                <th>Status</th>
+                <th class="text-end">Actie</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Datum.ToString("yyyy-MM-dd")</td>
+                    <td>@item.Tijdslot</td>
+                    <td>@item.TeamNaam</td>
+                    <td>@item.VeldNaam</td>
+                    <td>@(item.Tegenstander ?? "-")</td>
+                    <td>@item.Status</td>
+                    <td class="text-end">
+                        <div class="d-inline-flex justify-content-end align-items-center gap-2 flex-wrap">
+                            <a class="btn btn-sm btn-outline-secondary" asp-action="Wijzig" asp-route-id="@item.WedstrijdId">Wijzig</a>
+                            <form method="post" asp-action="Verwijder" class="m-0 d-inline-flex align-items-center" onsubmit="return confirm('Weet je zeker dat je deze wedstrijd wilt verwijderen?');">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="wedstrijdId" value="@item.WedstrijdId" />
+                                <button class="btn btn-sm btn-outline-danger" type="submit">Verwijder</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+
