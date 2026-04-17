@@ -6,10 +6,10 @@ public sealed class LidTeamKoppelViewModel
 {
     public int LidId { get; set; }
 
-    [Required]
+    [Range(1, int.MaxValue, ErrorMessage = "Team is verplicht.")]
     public int TeamId { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Vanaf datum is verplicht.")]
     [DataType(DataType.Date)]
     public DateTime VanafDatum { get; set; } = DateTime.UtcNow.Date;
 }

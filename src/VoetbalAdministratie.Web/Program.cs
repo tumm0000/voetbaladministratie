@@ -6,7 +6,21 @@ using Microsoft.AspNetCore.Localization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    var messages = options.ModelBindingMessageProvider;
+    messages.SetAttemptedValueIsInvalidAccessor((value, fieldName) => $"De waarde '{value}' is ongeldig voor {fieldName}.");
+    messages.SetMissingBindRequiredValueAccessor(fieldName => $"{fieldName} is verplicht.");
+    messages.SetMissingKeyOrValueAccessor(() => "Een vereiste waarde ontbreekt.");
+    messages.SetMissingRequestBodyRequiredValueAccessor(() => "De aanvraag bevat geen geldige gegevens.");
+    messages.SetNonPropertyAttemptedValueIsInvalidAccessor(value => $"De waarde '{value}' is ongeldig.");
+    messages.SetNonPropertyUnknownValueIsInvalidAccessor(() => "De opgegeven waarde is ongeldig.");
+    messages.SetNonPropertyValueMustBeANumberAccessor(() => "De waarde moet een getal zijn.");
+    messages.SetUnknownValueIsInvalidAccessor(fieldName => $"De opgegeven waarde is ongeldig voor {fieldName}.");
+    messages.SetValueIsInvalidAccessor(value => $"De waarde '{value}' is ongeldig.");
+    messages.SetValueMustBeANumberAccessor(fieldName => $"{fieldName} moet een getal zijn.");
+    messages.SetValueMustNotBeNullAccessor(fieldName => $"{fieldName} is verplicht.");
+});
 
 var nlCulture = new CultureInfo("nl-NL");
 CultureInfo.DefaultThreadCurrentCulture = nlCulture;

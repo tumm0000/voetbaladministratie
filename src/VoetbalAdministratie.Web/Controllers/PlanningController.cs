@@ -27,7 +27,7 @@ public sealed class PlanningController : Controller
     {
         ViewBag.Teams = _lookupRepository.GetTeams();
         ViewBag.Velden = _lookupRepository.GetVelden();
-        return View(new Wedstrijd { Datum = DateTime.UtcNow.Date.AddDays(1), Tijdslot = "19:30-21:00", Status = "Gepland" });
+        return View(new Wedstrijd { Datum = DateTime.UtcNow.Date.AddDays(1), Tijdslot = "", Status = "Gepland" });
     }
 
     [HttpPost]
