@@ -25,6 +25,11 @@ public sealed class PlanningService
             return (false, "Dit veld is al bezet op het gekozen tijdslot.");
         }
 
+        if (_planningRepository.BestaatTeamConflict(wedstrijd.TeamId, wedstrijd.Datum, wedstrijd.Tijdslot, excludeWedstrijdId: null))
+        {
+            return (false, "Dit team heeft al een wedstrijd op het gekozen tijdslot.");
+        }
+
         var lidIds = _planningRepository.GetLedenIdsVanTeam(wedstrijd.TeamId);
         if (!_planningRepository.ZijnAlleLedenBeschikbaar(lidIds, wedstrijd.Datum, wedstrijd.Tijdslot))
         {
@@ -46,6 +51,11 @@ public sealed class PlanningService
         if (_planningRepository.BestaatVeldConflict(wedstrijd.VeldId, wedstrijd.Datum, wedstrijd.Tijdslot, excludeWedstrijdId: wedstrijd.WedstrijdId))
         {
             return (false, "Dit veld is al bezet op het gekozen tijdslot.");
+        }
+
+        if (_planningRepository.BestaatTeamConflict(wedstrijd.TeamId, wedstrijd.Datum, wedstrijd.Tijdslot, excludeWedstrijdId: wedstrijd.WedstrijdId))
+        {
+            return (false, "Dit team heeft al een wedstrijd op het gekozen tijdslot.");
         }
 
         var lidIds = _planningRepository.GetLedenIdsVanTeam(wedstrijd.TeamId);
@@ -91,6 +101,11 @@ public sealed class PlanningService
                     foreach (var veld in velden)
                     {
                         if (_planningRepository.BestaatVeldConflict(veld.VeldId, datum, tijdslot, excludeWedstrijdId: null))
+                        {
+                            continue;
+                        }
+
+                        if (_planningRepository.BestaatTeamConflict(team.TeamId, datum, tijdslot, excludeWedstrijdId: null))
                         {
                             continue;
                         }

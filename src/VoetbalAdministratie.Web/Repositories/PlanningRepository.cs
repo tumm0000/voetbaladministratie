@@ -90,6 +90,36 @@ public sealed class PlanningRepository
         return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
     }
 
+    public bool BestaatTeamConflict(int teamId, DateTime datum, string tijdslot, int? excludeWedstrijdId = null)
+    {
+        using var connection = _db.OpenConnection();
+        using var cmd = connection.CreateCommand();
+        cmd.CommandText =
+            excludeWedstrijdId is null
+                ? """
+                  SELECT COUNT(1)
+                  FROM Wedstrijd
+                  WHERE team_id = $teamId AND datum = $datum AND tijdslot = $tijdslot;
+                  """
+                : """
+                  SELECT COUNT(1)
+                  FROM Wedstrijd
+                  WHERE team_id = $teamId
+                    AND datum = $datum
+                    AND tijdslot = $tijdslot
+                    AND wedstrijd_id <> $excludeId;
+                  """;
+        cmd.Parameters.AddWithValue("$teamId", teamId);
+        cmd.Parameters.AddWithValue("$datum", datum.ToString("yyyy-MM-dd"));
+        cmd.Parameters.AddWithValue("$tijdslot", tijdslot);
+        if (excludeWedstrijdId is not null)
+        {
+            cmd.Parameters.AddWithValue("$excludeId", excludeWedstrijdId.Value);
+        }
+
+        return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+    }
+
     public Wedstrijd? GetWedstrijd(int wedstrijdId)
     {
         using var connection = _db.OpenConnection();
