@@ -38,6 +38,27 @@ In dit project worden gangbare technieken toegepast, waaronder Git voor versiebe
 
 ---
 
-## 4. Korte conclusie
+## 4. Codestructuur: waarom controllers, services, repositories en views
 
-Manage and control komt in dit project naar voren door een stapsgewijze aanpak, zichtbare voortgang via Git, gerichte feedbackmomenten en toetsing van keuzes in zowel documentatie als implementatie. Daarmee blijft de ontwikkeling bestuurbaar en wordt kwaliteit aantoonbaar bewaakt.
+De webapplicatie volgt een indeling die je vaak ziet bij ASP.NET Core MVC-projecten: controllers en views voor de weblaag, daartussen een servicelaag voor de kernlogica, en repositories voor alles wat met de database te maken heeft. De precieze mappen staan toegelicht in `docs/05-applicatie-toelichting.md`.
+
+Zo werkt het globaal samen:
+
+- Een **controller** ontvangt een HTTP-verzoek (bijvoorbeeld een pagina openen of een formulier versturen), roept de juiste service aan en stuurt daarna een **view** terug met het model dat de pagina nodig heeft. De controller blijft daardoor dun: vooral routeren en doorgeven, weinig eigen regels.
+- Een **service** bevat de stappen die bij een use case horen: valideren, samenstellen van resultaten, regels zoals “mag deze wedstrijd op dit veld op dit tijdstip”. Als die logica in de controller zou staan, wordt die snel groot en lastig te volgen.
+- Een **repository** bevat alle SQL en ADO.NET-aanroepen voor één deel van het domein (bijvoorbeeld leden of wedstrijden). Databasecode zit daarmee op één plek in plaats van verspreid over de hele app. Dat helpt bij onderhoud en bij het consequent gebruiken van veilige queries (bijvoorbeeld parameters i.p.v. tekst in elkaar plakken).
+- **Views** (Razor) zorgen alleen voor weergave: knoppen, tabellen, formulieren. Ze horen niet zelf naar de database te praten; ze krijgen data van buitenaf.
+
+Waarom dit patroon zo vaak wordt gebruikt:
+
+- Je maakt een duidelijk **scheiding tussen scherm, logica en data**. Als je later het uiterlijk aanpast, hoef je niet in de SQL te zitten; als je een databaseregel wijzigt, hoef je niet alle pagina’s langs.
+- Het sluit aan op hoe Microsoft MVC uitlegt en hoe veel voorbeelden en cursussen zijn opgebouwd, dus anderen (en jij later) vinden snel hun weg in de code.
+- Het maakt **testen en uitbreiden** eenvoudiger: je kunt services en repositories apart aanpakken en stap voor stap uitbreiden zonder meteen de hele applicatie om te gooien.
+
+Die structuur past bij Manage and control omdat wijzigingen per laag beheersbaar blijven en de kwaliteit van de code beter te volgen is dan bij één grote door elkaar lopende bestanden.
+
+---
+
+## 5. Korte conclusie
+
+Manage and control komt in dit project naar voren door een stapsgewijze aanpak, zichtbare voortgang via Git, gerichte feedbackmomenten en toetsing van keuzes in zowel documentatie als implementatie. De gekozen lagen in de code ondersteunen dat doordat verantwoordelijkheden duidelijk verdeeld zijn. Daarmee blijft de ontwikkeling bestuurbaar en wordt kwaliteit aantoonbaar bewaakt.

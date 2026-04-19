@@ -16,7 +16,7 @@ Software voor ledenbeheer en wedstrijdplanning van een lokale voetbalclub. Dit p
 
 | Map | Inhoud |
 |-----|--------|
-| `docs/` | Documentatie: plan van aanpak, analyse, ERD, datamodel, klassendiagram, applicatie-toelichting |
+| `docs/` | Documentatie: plan van aanpak, analyse, ontwerp (ERD, datamodel, UML), applicatie, portfolio-reflecties |
 | `docs/diagrams/` | Diagrammen (contextdiagram, use case, enz.) |
 | `plan/` | Uitvoeringsplan voor ontwikkeling en Git-workflow |
 | `database/` | SQL-schema en scripts voor de database |
@@ -32,6 +32,10 @@ Software voor ledenbeheer en wedstrijdplanning van een lokale voetbalclub. Dit p
 | `docs/03-datamodel-sql.md` | Datamodel en toelichting bij het SQL-schema |
 | `docs/04-klassendiagram.md` | UML-klassendiagram |
 | `docs/05-applicatie-toelichting.md` | Werking, instructies en testresultaten van de applicatie |
+| `docs/06-zelfreflectie-personal-leadership.md` | Zelfreflectie: Personal leadership (Portflow) |
+| `docs/07-manage-and-control-reflectie.md` | Reflectie: Manage and control; uitleg codestructuur (MVC, services, repositories) |
+| `docs/08-portfolio-design.md` | Portfolio: Design (gebruikersspecificaties, diagrammen, validatie) |
+| `docs/09-portfolio-design-database.md` | Portfolio: Design — database (ontwerp, relaties, CRUD) |
 
 Het SQL-schema staat in `database/schema.sql`.
 
