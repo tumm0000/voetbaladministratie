@@ -36,6 +36,7 @@ Software voor ledenbeheer en wedstrijdplanning van een lokale voetbalclub. Dit p
 | `docs/07-manage-and-control-reflectie.md` | Reflectie: Manage and control; uitleg codestructuur (MVC, services, repositories) |
 | `docs/08-portfolio-design.md` | Portfolio: Design (gebruikersspecificaties, diagrammen, validatie) |
 | `docs/09-portfolio-design-database.md` | Portfolio: Design — database (ontwerp, relaties, CRUD) |
+| `docs/10-portfolio-realisatie.md` | Portfolio: Realisatie (implementatie, validatie, kwaliteit, OO) |
 
 Het SQL-schema staat in `database/schema.sql`.
 
