@@ -26,6 +26,7 @@ Software voor ledenbeheer en wedstrijdplanning van een lokale voetbalclub. Dit p
 
 | Bestand | Beschrijving |
 |---------|--------------|
+| `docs/0-onderzoek-tools-methoden-professional-standard.md` | Onderzoek: tools, methoden, Razor/MVC, UML, plan van aanpak, PS-1–PS-4 |
 | `docs/00-plan-van-aanpak.md` | Plan van aanpak, scope, fasering, Portflow-criteria |
 | `docs/01-analyse.md` | Analyse: functionaliteiten, use cases, contextdiagram |
 | `docs/02-erd-conceptueel-model.md` | ERD en conceptueel model |
@@ -37,7 +38,6 @@ Software voor ledenbeheer en wedstrijdplanning van een lokale voetbalclub. Dit p
 | `docs/08-portfolio-design.md` | Portfolio: Design (gebruikersspecificaties, diagrammen, validatie) |
 | `docs/09-portfolio-design-database.md` | Portfolio: Design — database (ontwerp, relaties, CRUD) |
 | `docs/10-portfolio-realisatie.md` | Portfolio: Realisatie (implementatie, validatie, kwaliteit, OO) |
-| `docs/11-onderzoek-tools-methoden-professional-standard.md` | Onderzoek: tools, methoden, Razor/MVC, UML, plan van aanpak, PS-1–PS-4 |
 
 Het SQL-schema staat in `database/schema.sql`.
 
