@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using VoetbalAdministratie.Web.Services;
 using VoetbalAdministratie.Web.ViewModels;
 
@@ -29,7 +30,7 @@ public sealed class BetalingenController : Controller
         {
             Vervaldatum = DateTime.UtcNow.Date.AddDays(14),
             Status = "Open",
-            Bedrag = 25.00m
+            Bedrag = "25,00"
         });
     }
 
@@ -39,8 +40,13 @@ public sealed class BetalingenController : Controller
     {
         ViewBag.Leden = _lidService.GetLeden();
         if (!ModelState.IsValid) return View(vm);
+        if (!vm.TryGetBedrag(out var bedrag))
+        {
+            ModelState.AddModelError(nameof(vm.Bedrag), "Bedrag is ongeldig.");
+            return View(vm);
+        }
 
-        _betalingService.MaakContributieAan(vm.LidId, vm.Bedrag, vm.Vervaldatum, vm.Status);
+        _betalingService.MaakContributieAan(vm.LidId, bedrag, vm.Vervaldatum, vm.Status);
         TempData["Message"] = "Contributieregel is aangemaakt.";
         return RedirectToAction(nameof(Index));
     }
@@ -56,7 +62,7 @@ public sealed class BetalingenController : Controller
         {
             ContributieId = c.Value.contributieId,
             LidId = c.Value.lidId,
-            Bedrag = c.Value.bedrag,
+            Bedrag = c.Value.bedrag.ToString("0.00", CultureInfo.GetCultureInfo("nl-NL")),
             Vervaldatum = c.Value.vervaldatum,
             Status = c.Value.status
         });
@@ -69,8 +75,13 @@ public sealed class BetalingenController : Controller
         ViewBag.Leden = _lidService.GetLeden();
         if (vm.ContributieId <= 0) return BadRequest();
         if (!ModelState.IsValid) return View(vm);
+        if (!vm.TryGetBedrag(out var bedrag))
+        {
+            ModelState.AddModelError(nameof(vm.Bedrag), "Bedrag is ongeldig.");
+            return View(vm);
+        }
 
-        _betalingService.WijzigContributie(vm.ContributieId, vm.LidId, vm.Bedrag, vm.Vervaldatum, vm.Status);
+        _betalingService.WijzigContributie(vm.ContributieId, vm.LidId, bedrag, vm.Vervaldatum, vm.Status);
         TempData["Message"] = "Contributieregel is bijgewerkt.";
         return RedirectToAction(nameof(Index));
     }

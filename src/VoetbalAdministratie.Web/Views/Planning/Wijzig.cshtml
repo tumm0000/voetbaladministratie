@@ -4,6 +4,8 @@
     ViewData["Title"] = "Wijzig wedstrijd";
     var teams = ViewBag.Teams as List<Team> ?? new List<Team>();
     var velden = ViewBag.Velden as List<Veld> ?? new List<Veld>();
+    var standaardTijdsloten = new[] { "18:00-19:30", "19:30-21:00" };
+    var isAangepastTijdslot = !string.IsNullOrWhiteSpace(Model.Tijdslot) && !standaardTijdsloten.Contains(Model.Tijdslot);
 }
 
 <h1 class="h3">Wijzig wedstrijd</h1>
@@ -46,7 +48,35 @@
         </div>
         <div class="col-md-4">
             <label class="form-label">Tijdslot</label>
-            <input class="form-control" asp-for="Tijdslot" />
+            <input asp-for="Tijdslot" type="hidden" />
+            <select class="form-select" id="tijdslotKeuze">
+                <option value="">Kies tijdslot...</option>
+                @foreach (var tijdslot in standaardTijdsloten)
+                {
+                    if (Model.Tijdslot == tijdslot)
+                    {
+                        <option value="@tijdslot" selected>@tijdslot</option>
+                    }
+                    else
+                    {
+                        <option value="@tijdslot">@tijdslot</option>
+                    }
+                }
+                @if (isAangepastTijdslot)
+                {
+                    <option value="__anders__" selected>Anders, namelijk...</option>
+                }
+                else
+                {
+                    <option value="__anders__">Anders, namelijk...</option>
+                }
+            </select>
+            <input
+                class="form-control mt-2"
+                id="tijdslotAnders"
+                placeholder="Bijv. 20:00-21:30"
+                value="@(isAangepastTijdslot ? Model.Tijdslot : string.Empty)"
+                style="display:@(isAangepastTijdslot ? "block" : "none");" />
             <span class="text-danger" asp-validation-for="Tijdslot"></span>
         </div>
         <div class="col-md-4">
@@ -77,4 +107,29 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            const keuze = document.getElementById("tijdslotKeuze");
+            const andersInput = document.getElementById("tijdslotAnders");
+            const tijdslotHidden = document.getElementById("Tijdslot");
+            if (!keuze || !andersInput || !tijdslotHidden) return;
+
+            const andersWaarde = "__anders__";
+
+            const syncValue = function () {
+                if (keuze.value === andersWaarde) {
+                    andersInput.style.display = "block";
+                    tijdslotHidden.value = andersInput.value.trim();
+                    return;
+                }
+
+                andersInput.style.display = "none";
+                tijdslotHidden.value = keuze.value;
+            };
+
+            keuze.addEventListener("change", syncValue);
+            andersInput.addEventListener("input", syncValue);
+            syncValue();
+        })();
+    </script>
 }
